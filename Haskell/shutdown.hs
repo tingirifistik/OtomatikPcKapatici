@@ -28,7 +28,6 @@ main = do
             let time_ = reads timeStr :: [(Int, String)]
             case time_ of
                 [(timeInt, "")] -> do 
-                    
                     callCommand("cls||clear && "++shutdown++show(timeInt*multiply))
                     threadDelay 3000000
                 _ -> do
