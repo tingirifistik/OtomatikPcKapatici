@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define CLEAR_SCREEN "\033[H\033[J"
+
+#ifdef _WIN32
+    #define SHUTDOWN_CMD "shutdown -s -t %d"
+    #define CANCEL_SHUTDOWN "shutdown -a"
+#else
+    #define SHUTDOWN_CMD "sleep %d && shutdown -h now "
+    #define CANCEL_SHUTDOWN "shutdown -c"
+#endif
+
+void ClearTerminal();
+void ClearBuffer();
+
+int main()
+{
+    char selection;
+    int shutdownTimer;
+    int secondToMinuteMultiplier = 60;
+
+    while(1)
+    {
+        printf("Enter '1' to set the shutdown timer.\nEnter '2' to cancel the shutdown.\nEnter '3' to exit.\n");
+        scanf(" %c", &selection);
+        ClearBuffer();
+
+        if(selection == '1')
+        {
+            printf("How many minutes later do you want the computer to shutdown: ");
+            scanf(" %d", &shutdownTimer);
+            
+            char command[50];
+            sprintf(command, SHUTDOWN_CMD, shutdownTimer * secondToMinuteMultiplier);
+            system(command); // Run the command
+        }
+        else if(selection == '2')
+        {
+            system(CANCEL_SHUTDOWN);
+            printf("The shutdown has been canceled...\n");
+        }
+        else if(selection == '3')
+        {
+            printf("Program is terminating...\n");
+            break;
+        }
+        else
+        {
+            ClearTerminal();
+            printf("Invalid option! Please choose a valid option.\n");
+        }
+    }
+    
+    return 0;
+}
+
+void ClearTerminal()
+{
+    printf("%s", CLEAR_SCREEN);
+}
+
+void ClearBuffer()
+{
+    char c;
+    while((c = getchar()) != EOF && c != '\n');
+}
