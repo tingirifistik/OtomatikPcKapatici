@@ -29,7 +29,7 @@ int main(){
         else if (menu==2){
             system(cancel.c_str());
             cout<<"The shutdown has been canceled.."<<endl;
-            std::this_thread::sleep_for(std::chrono::seconds(2));
+            this_thread::sleep_for(std::chrono::seconds(2));
         }
         else if (menu==3){
             break;
